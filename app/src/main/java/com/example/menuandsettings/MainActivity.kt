@@ -1,20 +1,18 @@
 package com.example.menuandsettings
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.ActionMode
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
-import android.widget.LinearLayout
-import android.widget.TextClock
+import android.view.*
+import android.widget.*
 import androidx.core.view.isVisible
 import com.example.menuandsettings.databinding.ActivityMainBinding
 
 
 class MainActivity : AppCompatActivity() {
+    private var peopleList:List<Registration> =ArrayList()
     lateinit var background:LinearLayout
     lateinit var clocklayout:LinearLayout
     lateinit var tClock:TextClock
@@ -98,6 +96,42 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun setBindings(binding: ActivityMainBinding){
+
+    }
+    fun refreshDATA(){
+        val db=RegistrationAdapter(this)
+        peopleList=db.readtDATA()
+        val adapter=PeopleAdapter(this,peopleList)
+        //adapter=adapter??
+    }
+    class PeopleAdapter(internal var activity: Activity,internal var peoplelist:List<Registration>):BaseAdapter(){
+        internal var inflater:LayoutInflater
+        init {
+            inflater=activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        }
+        override fun getCount(): Int {
+            return peoplelist.size
+        }
+
+        override fun getItem(p0: Int): Any {
+            return peoplelist[p0]
+        }
+
+        override fun getItemId(p0: Int): Long {
+            return peoplelist[p0].email.toLong()
+        }
+
+        override fun getView(p0: Int, p1: View?, p2: ViewGroup?): View {
+            val view:View=inflater.inflate(R.layout.registerlayout,null)
+           var name1=view.findViewById<EditText>(R.id.editname)
+            var email1=view.findViewById<EditText>(R.id.editemail)
+            var pass1=view.findViewById<EditText>(R.id.editpasword)
+            peoplelist[p0].name= name1.toString()
+            peoplelist[p0].email=email1.toString()
+            peoplelist[p0].password=pass1.toString()
+
+        return view
+        }
 
     }
 }

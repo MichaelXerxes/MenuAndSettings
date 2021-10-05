@@ -1,8 +1,16 @@
 package com.example.menuandsettings
 
-data class Registration (
-    val name:String,
-    val email:String,
-    val password:String,
-    val isCHecked:Boolean=false
-        )
+ class Registration {
+    var name: String=""
+    var email: String=""
+    var password: String=""
+     constructor(name:String,email:String,pass:String){
+         this.name=name
+         this.email=email
+         this.password=pass
+     }
+     constructor(){
+
+     }
+
+}
