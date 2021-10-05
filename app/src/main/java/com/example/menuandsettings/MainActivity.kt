@@ -102,7 +102,8 @@ class MainActivity : AppCompatActivity() {
         val db=RegistrationAdapter(this)
         peopleList=db.readtDATA()
         val adapter=PeopleAdapter(this,peopleList)
-        //adapter=adapter??
+       // val view1:View=setContentView(R.layout.listregpeopleview,null)
+       // data
     }
     class PeopleAdapter(internal var activity: Activity,internal var peoplelist:List<Registration>):BaseAdapter(){
         internal var inflater:LayoutInflater
