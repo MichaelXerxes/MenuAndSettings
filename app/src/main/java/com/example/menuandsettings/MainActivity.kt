@@ -75,20 +75,25 @@ class MainActivity : AppCompatActivity() {
                 password=findViewById(R.id.editpasword)
 
                 buttonregister.setOnClickListener {
+                    if(name.text.toString().isEmpty()||email.text.toString().isEmpty()||password.text.toString().isEmpty()){
+                        Toast.makeText(this,"Fill all the fields",Toast.LENGTH_SHORT).show()
+                        return@setOnClickListener
+                    }else {
 
-                    val a= name.text.toString()
-                    val b=email.text.toString()
-                    val c=password.text.toString()
-                    val data=Registration(a,b,c)
-                    db.insertDATA(data)
-                    Toast.makeText(this,"data saved successfully",Toast.LENGTH_SHORT).show()
-                    name.text.clear()
-                    email.text.clear()
-                    password.text.clear()
-                   setContentView(R.layout.listregpeopleview)
-                  //  ...............................................
-                    //............................#
-                    //.......................................!!!!!!!!!!!!!!!!!!!!!!!!!!! 2morow ¬¬!!
+                        val a = name.text.toString()
+                        val b = email.text.toString()
+                        val c = password.text.toString()
+                        val data = Registration(a, b, c)
+                        db.insertDATA(data)
+                        Toast.makeText(this, "data saved successfully", Toast.LENGTH_SHORT).show()
+                        name.text.clear()
+                        email.text.clear()
+                        password.text.clear()
+                        setContentView(R.layout.textclock)
+                        //  ...............................................
+                        //............................#
+                        //.......................................!!!!!!!!!!!!!!!!!!!!!!!!!!! 2morow ¬¬!!
+                    }
                 }
 
             }
