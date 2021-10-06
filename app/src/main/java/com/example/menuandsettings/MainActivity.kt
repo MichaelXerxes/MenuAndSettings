@@ -18,10 +18,19 @@ class MainActivity : AppCompatActivity() {
     lateinit var tClock:TextClock
     lateinit var itemRed: MenuItem
     lateinit var binding: ActivityMainBinding
+
+    lateinit var name:EditText
+    lateinit var email:EditText
+    lateinit var password:EditText
+    lateinit var buttonregister:Button
+    lateinit var db:RegistrationAdapter
+
+    //lateinit var viewReg:View
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
           background=findViewById<LinearLayout>(R.id.backMenu) as LinearLayout
+        db= RegistrationAdapter(this)
         //clocklayout=findViewById<LinearLayout>(R.id.textClockLinearLayoutID) as LinearLayout
           //tClock=findViewById<TextClock>(R.id.textClock) as TextClock
        //binding= ActivityMainBinding.inflate(layoutInflater)
@@ -53,20 +62,42 @@ class MainActivity : AppCompatActivity() {
                     setContentView(R.layout.textclock)
                     Toast.makeText(this@MainActivity,"Time",Toast.LENGTH_SHORT).show()
 
+
                     //setBackgroundColor(Color.parseColor("#FF0000"))
                 }
             R.id.Register->{
+                //val viewReg:View= View.inflate(Context.)
                 setContentView(R.layout.registerlayout)
                 Toast.makeText(this@MainActivity,"Register options",Toast.LENGTH_SHORT).show()
-                //val intent=Intent(this,RegisterActivity::class.java)
-                //startActivity(intent)
+                buttonregister=findViewById(R.id.register_button)
+                name=findViewById(R.id.editname)
+                email=findViewById(R.id.editemail)
+                password=findViewById(R.id.editpasword)
+
+                buttonregister.setOnClickListener {
+
+                    val a= name.text.toString()
+                    val b=email.text.toString()
+                    val c=password.text.toString()
+                    val data=Registration(a,b,c)
+                    db.insertDATA(data)
+                    Toast.makeText(this,"data saved successfully",Toast.LENGTH_SHORT).show()
+                    name.text.clear()
+                    email.text.clear()
+                    password.text.clear()
+                   setContentView(R.layout.listregpeopleview)
+                  //  ...............................................
+                    //............................#
+                    //.......................................!!!!!!!!!!!!!!!!!!!!!!!!!!! 2morow ¬¬!!
+                }
+
             }
 
 
-            //R.id.Register->background.setBackgroundColor(Color.parseColor("#00FF00"))
+
             R.id.Login->{
                 setContentView(R.layout.loginlayout)
-                //background.setBackgroundColor(Color.parseColor("#0000FF"))
+
             }
             R.id.textsome->{Toast.makeText(this@MainActivity,"This item will be shown always on the action bar"
             ,Toast.LENGTH_SHORT).show()
@@ -98,12 +129,14 @@ class MainActivity : AppCompatActivity() {
     fun setBindings(binding: ActivityMainBinding){
 
     }
+
     fun refreshDATA(){
         val db=RegistrationAdapter(this)
         peopleList=db.readtDATA()
         val adapter=PeopleAdapter(this,peopleList)
-       // val view1:View=setContentView(R.layout.listregpeopleview,null)
-       // data
+        val viewlist:LinearLayout
+        viewlist=findViewById(R.id.listlayout)
+        viewlist.findViewById<ListView>(R.id.data_list).adapter=adapter
     }
     class PeopleAdapter(internal var activity: Activity,internal var peoplelist:List<Registration>):BaseAdapter(){
         internal var inflater:LayoutInflater
