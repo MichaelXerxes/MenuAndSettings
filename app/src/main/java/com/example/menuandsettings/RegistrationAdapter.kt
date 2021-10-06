@@ -12,11 +12,11 @@ val EMAIL_COLUMN="Email"
 val PASS_COLUMN="Password"
 class RegistrationAdapter(var context:Context):SQLiteOpenHelper(context,DATABASE_NAME,null,1) {
     override fun onCreate(p0: SQLiteDatabase?) {
-         val personTable="CREATE TABLE"+TABLE_NAME+" ("+
-                 NAME_COLUMN+" VARCHAR(256),"+
-                 EMAIL_COLUMN+" VARCHAR(256),"+
-                 PASS_COLUMN+" VARCHAR(256))"
-        p0!!.execSQL(personTable)
+         val personTable="CREATE TABLE $TABLE_NAME"+
+                 "($NAME_COLUMN TEXT,"+
+                 "$EMAIL_COLUMN TEXT,"+
+                 "$PASS_COLUMN TEXT"+")"
+        p0?.execSQL(personTable)
     }
 
     override fun onUpgrade(p0: SQLiteDatabase?, p1: Int, p2: Int) {
