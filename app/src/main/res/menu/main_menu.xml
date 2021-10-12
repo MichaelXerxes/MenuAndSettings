@@ -17,5 +17,9 @@
         android:id="@+id/textsome"
         android:title="Click Me"
         app:showAsAction="always"/>
+    <item
+        android:id="@+id/menu_sheetbottom"
+        android:title="Bottom Sheet"
+        app:showAsAction="never"/>
 
 </menu>

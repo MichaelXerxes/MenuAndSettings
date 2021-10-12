@@ -1,14 +1,16 @@
 package com.example.menuandsettings
 import android.app.Activity
 import android.content.Context
-import android.content.Intent
-import android.graphics.Color
+import android.database.Cursor
+import android.database.sqlite.SQLiteDatabase
+
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.*
 import android.widget.*
-import androidx.core.view.isVisible
+
 import com.example.menuandsettings.databinding.ActivityMainBinding
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 
 
 class MainActivity : AppCompatActivity() {
@@ -29,6 +31,23 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        //val bottomSheet:View=findViewById(R.id.bottom_sheet,null)
+        //val buttonSheetCall:Button=findViewById(R.id.button_forsheet)
+        //val bottomSheetBehavior:BottomSheetBehavior<View> =BottomSheetBehavior.from(bottomSheet)
+       /* bottomSheetBehavior.setBottomSheetCallback(object :BottomSheetBehavior.BottomSheetCallback()
+        {
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+                Toast.makeText(applicationContext,"OnSlide Function Fiu FIu ",Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                when(newState){
+                    BottomSheetBehavior.STATE_DRAGGING->Toast.makeText(applicationContext,"Bottom Shett Behavior State dragginf",Toast.LENGTH_SHORT).show()
+
+                }
+            }
+        })*/
+
           background=findViewById<LinearLayout>(R.id.backMenu) as LinearLayout
         db= RegistrationAdapter(this)
         //clocklayout=findViewById<LinearLayout>(R.id.textClockLinearLayoutID) as LinearLayout
@@ -36,6 +55,17 @@ class MainActivity : AppCompatActivity() {
        //binding= ActivityMainBinding.inflate(layoutInflater)
        // itemRed=findViewById<LinearLayout>(R.id.redColor) as MenuItem
         supportActionBar?.title="Option Menu"
+      /*  buttonSheetCall.setOnClickListener {
+            if(bottomSheetBehavior.state==BottomSheetBehavior.STATE_COLLAPSED)
+            {
+                bottomSheetBehavior.state=BottomSheetBehavior.STATE_EXPANDED
+            }
+            else
+            {
+                bottomSheetBehavior.state=BottomSheetBehavior.STATE_COLLAPSED
+            }
+        }*/
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -81,10 +111,12 @@ class MainActivity : AppCompatActivity() {
                         return@setOnClickListener
                    }else {
 
-                        val a = name.text.toString()
-                        val b = email.text.toString()
-                        val c = password.text.toString()
-                        val data = Registration(a, b, c)
+                        val namelocal = name.text.toString()
+                        val emaillocal = email.text.toString()
+                        val passlocal = password.text.toString()
+                        val data = Registration( 24,namelocal, emaillocal,passlocal)
+
+                        //val bottomView:View=findViewById(R.id.layout_bottomsheet)
                         db.insertDATA(data)
                         Toast.makeText(this@MainActivity, "data saved successfully", Toast.LENGTH_SHORT).show()
                         name.text.clear()
@@ -103,10 +135,52 @@ class MainActivity : AppCompatActivity() {
                 setContentView(R.layout.loginlayout)
 
             }
-            R.id.textsome->{Toast.makeText(this@MainActivity,"This item will be shown always on the action bar"
+            R.id.textsome->{
+                Toast.makeText(this@MainActivity,"This item will be shown always on the action bar"
             ,Toast.LENGTH_SHORT).show()
-                setContentView(R.layout.activity_main)
+                setContentView(R.layout.listview3)
+                refreshDATA()
 
+            }
+            R.id.menu_sheetbottom->{
+                Toast.makeText(this@MainActivity,"hahahahah",Toast.LENGTH_SHORT).show()
+                setContentView(R.layout.bottom_sheet)
+              // refreshDATA()
+
+              // val bottomSheet:View=findViewById(R.id.bottom_sheet)
+              //  val buttonSheetCall:Button=findViewById(R.id.button_forsheet)
+               // val bottomSheetBehavior:BottomSheetBehavior<*> =BottomSheetBehavior.from<View>(bottomSheet)
+                /* bottomSheetBehavior.setBottomSheetCallback(object :BottomSheetBehavior.BottomSheetCallback()
+                 {
+                     override fun onSlide(bottomSheet: View, slideOffset: Float) {
+                         Toast.makeText(applicationContext,"OnSlide Function Fiu FIu ",Toast.LENGTH_SHORT).show()
+                     }
+
+                     override fun onStateChanged(bottomSheet: View, newState: Int) {
+                         when(newState){
+                             BottomSheetBehavior.STATE_DRAGGING->Toast.makeText(applicationContext,"Bottom Shett Behavior State dragginf",Toast.LENGTH_SHORT).show()
+
+                         }
+                     }
+                 })*/
+
+                //background=findViewById<LinearLayout>(R.id.backMenu) as LinearLayout
+                //db= RegistrationAdapter(this)
+                //clocklayout=findViewById<LinearLayout>(R.id.textClockLinearLayoutID) as LinearLayout
+                //tClock=findViewById<TextClock>(R.id.textClock) as TextClock
+                //binding= ActivityMainBinding.inflate(layoutInflater)
+                // itemRed=findViewById<LinearLayout>(R.id.redColor) as MenuItem
+
+                /* buttonSheetCall.setOnClickListener {
+                      if(bottomSheetBehavior.state==BottomSheetBehavior.STATE_COLLAPSED)
+                      {
+                          bottomSheetBehavior.state=BottomSheetBehavior.STATE_EXPANDED
+                      }
+                      else
+                      {
+                          bottomSheetBehavior.state=BottomSheetBehavior.STATE_COLLAPSED
+                      }
+                  }*/
             }
         }
 
@@ -138,10 +212,12 @@ class MainActivity : AppCompatActivity() {
         val db=RegistrationAdapter(this)
         peopleList=db.readtDATA()
         val adapter=PeopleAdapter(this,peopleList)
-        val viewlist:LinearLayout
-        viewlist=findViewById(R.id.listlayout)
-        viewlist.findViewById<ListView>(R.id.data_list).adapter=adapter
+        //viewlist=findViewById(R.id.listlayout)
+        //viewlist.findViewById<ListView>(R.id.data_list).adapter=adapter
+        val newList:ListView = findViewById(R.id.listview3ID)
+        newList.adapter=adapter
     }
+
     class PeopleAdapter(internal var activity: Activity,internal var peoplelist:List<Registration>):BaseAdapter(){
         internal var inflater:LayoutInflater
         init {
@@ -160,16 +236,21 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun getView(p0: Int, p1: View?, p2: ViewGroup?): View {
-            val view:View=inflater.inflate(R.layout.registerlayout,null)
-           var name1=view.findViewById<EditText>(R.id.editname)
-            var email1=view.findViewById<EditText>(R.id.editemail)
-            var pass1=view.findViewById<EditText>(R.id.editpasword)
+            val view3:View=inflater.inflate(R.layout.registerlayout,null)
+            var id3:Int=-1
+           var name1=view3.findViewById<EditText>(R.id.editname)
+            var email1=view3.findViewById<EditText>(R.id.editemail)
+            var pass1=view3.findViewById<EditText>(R.id.editpasword)
+            peoplelist[p0].id=id3
             peoplelist[p0].name= name1.toString()
             peoplelist[p0].email=email1.toString()
             peoplelist[p0].password=pass1.toString()
 
-        return view
+        return view3
         }
+        //fun readData():Cursor{
+       //     val db:SQLiteDatabase=this.get
+      //  }
 
     }
 }
