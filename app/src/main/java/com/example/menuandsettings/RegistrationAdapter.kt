@@ -8,40 +8,39 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteException
 import android.database.sqlite.SQLiteOpenHelper
 import java.lang.StringBuilder
-val DATABASE_NAME="MDB"
-val TABLE_NAME="People"
-val ID_COLUMN="ID"
-val NAME_COLUMN="Name"
-val EMAIL_COLUMN="Email"
-val PASS_COLUMN="Password"
+
 class RegistrationAdapter(var context:Context):SQLiteOpenHelper(context,DATABASE_NAME,null,1) {
-    override fun onCreate(p0: SQLiteDatabase?) {
-         val personTable="CREATE TABLE"+TABLE_NAME+
-                 "("+ID_COLUMN+"INTEGER PRIMARY KEY AUTOINCREMENT,"+
+    override fun onCreate(db: SQLiteDatabase?) {
+         val personTable=("CREATE TABLE $TABLE_NAME"+
+                 "("+ID_COLUMN+"INTEGER PRIMARY KEY,"+
                  NAME_COLUMN +"TEXT,"+
                  EMAIL_COLUMN+"TEXT,"+
-                 PASS_COLUMN+"TEXT"+")"
-        p0?.execSQL(personTable)
+                 PASS_COLUMN+"TEXT"+")")
+        db?.execSQL(personTable)
     }
 
-    override fun onUpgrade(p0: SQLiteDatabase?, p1: Int, p2: Int) {
-        TODO("Not yet implemented")
+    override fun onUpgrade(db: SQLiteDatabase?, p1: Int, p2: Int) {
+        db?.execSQL("DROP TABLE IF EXISTS $TABLE_NAME")
+        onCreate(db)
     }
-    fun insertDATA(people:Registration){
+    fun insertDATA(people:Registration):Long{
         val db=this.writableDatabase
         val cv=ContentValues()
         cv.put(ID_COLUMN,people.id)
         cv.put(NAME_COLUMN,people.name)
         cv.put(EMAIL_COLUMN,people.email)
         cv.put(PASS_COLUMN,people.password)
-        db.insert(TABLE_NAME, null,cv)
+
+        //println("ID- $ID_COLUMN Name- $NAME_COLUMN EM- $EMAIL_COLUMN PASS- $PASS_COLUMN  ")
+        val successdDB=db.insert(TABLE_NAME, null,cv)
+        return successdDB
     }
     @SuppressLint("Range")
-    fun readtDATA():List<Registration>{
+    fun readtDATA():ArrayList<Registration>{
         val list=ArrayList<Registration>()
         val db =this.readableDatabase
-        val query = "SELECT * FROM $TABLE_NAME"
-        val result=db.rawQuery(query,null)
+        val query = ("SELECT * FROM $TABLE_NAME")
+        //val result=db.rawQuery(query,null)
 
         var cursor:Cursor?=null
         var readID:Int
@@ -52,24 +51,26 @@ class RegistrationAdapter(var context:Context):SQLiteOpenHelper(context,DATABASE
             cursor=db.rawQuery(query,null)
         }catch (e: SQLiteException){
             db.execSQL(query)
-            return list
+            return ArrayList()
         }
-        db.execSQL(query)
-        if(result.moveToFirst()){
+        //db.execSQL(query)
+        if(cursor.moveToFirst()){
             do {
 
-                val person:Registration
+                readID=cursor.getString(cursor.getColumnIndex(ID_COLUMN)).toInt()
+                readName=cursor.getString(cursor.getColumnIndex(NAME_COLUMN))
+                readEmail=cursor.getString(cursor.getColumnIndex(EMAIL_COLUMN))
+                readPass=cursor.getString(cursor.getColumnIndex(PASS_COLUMN))
+                print("hahahahah")
+                println("fddgsggsfgfssghf")
+                println("$readEmail   $readName $readPass    ")
+                val person= Registration(readID,readName,readEmail,readPass)
 
-                readID=result.getString(result.getColumnIndex(ID_COLUMN)).toInt()
-                readName=result.getString(result.getColumnIndex(NAME_COLUMN))
-                readEmail=result.getString(result.getColumnIndex(EMAIL_COLUMN))
-                readPass=result.getString(result.getColumnIndex(PASS_COLUMN))
-                person= Registration(readID,readName,readEmail,readPass)
                 list.add(person)
 
 
 
-            }while (result.moveToNext())
+            }while (cursor.moveToNext())
         }
        /* if(result.moveToFirst()){
             do {
@@ -92,7 +93,7 @@ class RegistrationAdapter(var context:Context):SQLiteOpenHelper(context,DATABASE
     }
     companion object{
         val DATABASE_NAME="MDB"
-        val TABLE_NAME="People"
+        val TABLE_NAME="People2"
         val ID_COLUMN="ID"
         val NAME_COLUMN="Name"
         val EMAIL_COLUMN="Email"

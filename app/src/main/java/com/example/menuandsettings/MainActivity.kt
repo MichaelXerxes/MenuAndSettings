@@ -7,7 +7,10 @@ import android.database.sqlite.SQLiteDatabase
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.*
+import android.webkit.WebView
 import android.widget.*
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 import com.example.menuandsettings.databinding.ActivityMainBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -19,18 +22,24 @@ class MainActivity : AppCompatActivity() {
     lateinit var clocklayout:LinearLayout
     lateinit var tClock:TextClock
     lateinit var itemRed: MenuItem
-    lateinit var binding: ActivityMainBinding
+   // lateinit var binding: ActivityMainBinding
 
     lateinit var name:EditText
     lateinit var email:EditText
     lateinit var password:EditText
     lateinit var buttonregister:Button
     lateinit var db:RegistrationAdapter
+    // val website:WebView=findViewById(R.id.webID)
 
     //lateinit var viewReg:View
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+       // val website:WebView=findViewById(R.id.webID)
+       // website.loadUrl("https://www.google.co.uk")
+
         setContentView(R.layout.activity_main)
+       // setupListofDataIntoRecyclerView()
+
         //val bottomSheet:View=findViewById(R.id.bottom_sheet,null)
         //val buttonSheetCall:Button=findViewById(R.id.button_forsheet)
         //val bottomSheetBehavior:BottomSheetBehavior<View> =BottomSheetBehavior.from(bottomSheet)
@@ -99,33 +108,7 @@ class MainActivity : AppCompatActivity() {
                 //val viewReg:View= View.inflate(Context.)
                 setContentView(R.layout.registerlayout)
                 Toast.makeText(this@MainActivity,"Register options",Toast.LENGTH_SHORT).show()
-                buttonregister=findViewById(R.id.register_button)
-                name=findViewById(R.id.editname)
-                email=findViewById(R.id.editemail)
-                password=findViewById(R.id.editpasword)
-
-                buttonregister.setOnClickListener {
-                   if(name.text.toString().isEmpty()||email.text.toString().isEmpty()||password.text.toString().isEmpty()){
-                       setContentView(R.layout.loginlayout)
-                       Toast.makeText(this@MainActivity,"Fill all the fields",Toast.LENGTH_SHORT).show()
-                        return@setOnClickListener
-                   }else {
-
-                        val namelocal = name.text.toString()
-                        val emaillocal = email.text.toString()
-                        val passlocal = password.text.toString()
-                        val data = Registration( 24,namelocal, emaillocal,passlocal)
-
-                        //val bottomView:View=findViewById(R.id.layout_bottomsheet)
-                        db.insertDATA(data)
-                        Toast.makeText(this@MainActivity, "data saved successfully", Toast.LENGTH_SHORT).show()
-                        name.text.clear()
-                        email.text.clear()
-                        password.text.clear()
-                        setContentView(R.layout.textclock)
-
-                    }
-                }
+                addRecordRegistrations()
 
             }
 
@@ -139,7 +122,7 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this@MainActivity,"This item will be shown always on the action bar"
             ,Toast.LENGTH_SHORT).show()
                 setContentView(R.layout.listview3)
-                refreshDATA()
+                //refreshDATA()
 
             }
             R.id.menu_sheetbottom->{
@@ -204,9 +187,9 @@ class MainActivity : AppCompatActivity() {
         super.onActionModeStarted(mode)
     }
 
-    fun setBindings(binding: ActivityMainBinding){
+  //  fun setBindings(binding: ActivityMainBinding){// }
 
-    }
+
 
     fun refreshDATA(){
         val db=RegistrationAdapter(this)
@@ -214,8 +197,73 @@ class MainActivity : AppCompatActivity() {
         val adapter=PeopleAdapter(this,peopleList)
         //viewlist=findViewById(R.id.listlayout)
         //viewlist.findViewById<ListView>(R.id.data_list).adapter=adapter
-        val newList:ListView = findViewById(R.id.listview3ID)
+        val newList:ListView = findViewById(R.id.data_list1)
         newList.adapter=adapter
+    }
+    private fun addRecordRegistrations(){
+        //val name:EditText=findViewById(R.id.editname)
+        buttonregister=findViewById(R.id.register_button)
+        name=findViewById(R.id.editname)
+        email=findViewById(R.id.editemail)
+        password=findViewById(R.id.editpasword)
+
+        buttonregister.setOnClickListener {
+            if(name.text.toString().isEmpty()||email.text.toString().isEmpty()||password.text.toString().isEmpty()){
+                setContentView(R.layout.loginlayout)
+                Toast.makeText(this@MainActivity,"Fill all the fields",Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }else {
+
+                val namelocal = name.text.toString()
+                val emaillocal = email.text.toString()
+                val passlocal = password.text.toString()
+                val data = Registration( 22,namelocal, emaillocal,passlocal)
+
+                //val bottomView:View=findViewById(R.id.layout_bottomsheet)
+                db.insertDATA(data)
+                Toast.makeText(this@MainActivity, "data saved successfully", Toast.LENGTH_SHORT).show()
+                name.text.clear()
+                email.text.clear()
+                password.text.clear()
+                setContentView(R.layout.listview4)
+               // peopleList=db.readtDATA()
+               // val adapter=PeopleAdapter(this,peopleList)
+               // val newList:ListView = findViewById(R.id.rvItemsList2)
+                //newList.adapter=adapter
+
+            //setupListofDataIntoRecyclerView()
+
+            }
+        }
+    }
+    private fun getItemsList():ArrayList<Registration>{
+        val dbHandler:RegistrationAdapter= RegistrationAdapter(this)
+        val regList:ArrayList<Registration> =dbHandler.readtDATA()
+        return regList
+    }
+    private fun setupListofDataIntoRecyclerView(){
+        val rvItemsList:RecyclerView=findViewById(R.id.rvItemsList2)
+        //val tvNoRecordsAvailable:TextView=findViewById(R.id.tvNoRecordsAvailable)
+       // val textID:TextView=findViewById(R.id.viewID2)
+       // val textName:TextView=findViewById(R.id.viewName2)
+       // val textEmail:TextView=findViewById(R.id.viewEmail2)
+       // val textPass:TextView=findViewById(R.id.viewPass2)
+        if (getItemsList().size > 0) {
+
+            rvItemsList.visibility = View.VISIBLE
+            //tvNoRecordsAvailable.visibility = View.GONE
+
+
+            rvItemsList.layoutManager = LinearLayoutManager(this)
+
+            val itemAdapter = ItemAdapter(this, getItemsList())
+
+            rvItemsList.adapter = itemAdapter
+        } else {
+
+            rvItemsList.visibility = View.GONE
+           // tvNoRecordsAvailable.visibility = View.VISIBLE
+        }
     }
 
     class PeopleAdapter(internal var activity: Activity,internal var peoplelist:List<Registration>):BaseAdapter(){
@@ -237,7 +285,7 @@ class MainActivity : AppCompatActivity() {
 
         override fun getView(p0: Int, p1: View?, p2: ViewGroup?): View {
             val view3:View=inflater.inflate(R.layout.registerlayout,null)
-            var id3:Int=-1
+            var id3:Int=-7
            var name1=view3.findViewById<EditText>(R.id.editname)
             var email1=view3.findViewById<EditText>(R.id.editemail)
             var pass1=view3.findViewById<EditText>(R.id.editpasword)

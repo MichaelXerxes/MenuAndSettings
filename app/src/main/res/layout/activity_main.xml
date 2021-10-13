@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/backMenu"
+    android:orientation="vertical"
     tools:context=".MainActivity">
+
 
     <TextView
         android:id="@+id/MainTextView"
@@ -19,6 +21,10 @@
           on the bet you can buy yourself the freedom to do it later.”"
         android:textSize="25sp"
         android:layout_margin="16dp"
-       />
+        />
+    <WebView
+        android:id="@+id/webID"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

@@ -3,21 +3,55 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:orientation="vertical"
+    android:id="@+id/listview2ID">
 
-
-
-        <ListView
-            android:id="@+id/listview2"
-
+        <TextView
+            android:id="@+id/viewID2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="2dp"
-            android:background="#CA9898"
-            android:textAlignment="center"
-            android:layout_gravity="center"
-            android:textDirection="@integer/material_motion_duration_medium_1" />
+            android:textColor="@android:color/black"
+            android:textSize="22sp"
+            android:text="ID"
+            android:layout_margin="10dp"
+            android:padding="10dp"/>
+        <TextView
+            android:id="@+id/viewName2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:text="Name"
+            android:layout_margin="10dp"
+            android:padding="10dp"/>
+        <TextView
+            android:id="@+id/viewEmail2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:textSize="22sp"
+            android:text="Email"
+            android:layout_margin="10dp"
+            android:padding="10dp"/>
+        <TextView
+            android:id="@+id/viewPass2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:textSize="22sp"
+            android:text="Password"
+            android:textStyle="italic"
+            android:layout_margin="10dp"
+            android:padding="10dp"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvItemsList2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible"
+            tools:visibility="gone" />
 
 
 </LinearLayout>
