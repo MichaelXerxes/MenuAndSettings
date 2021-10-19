@@ -11,7 +11,13 @@ package com.example.menuandsettings
          this.email=email
          this.password=pass
      }
+     constructor(name:String,email: String,pass: String)
      constructor(){
+         fun toString():String {
+             var str=""
+             str+="ID: $id  Name: $name Email: $email Password: $password"
+             return str
+         }
 
      }
 

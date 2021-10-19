@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteDatabase
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.AndroidRuntimeException
+import android.util.Log
 import android.view.*
 import android.webkit.WebView
 import android.widget.*
@@ -24,6 +26,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var itemRed: MenuItem
    // lateinit var binding: ActivityMainBinding
 
+    lateinit var idedit:EditText
     lateinit var name:EditText
     lateinit var email:EditText
     lateinit var password:EditText
@@ -57,12 +60,9 @@ class MainActivity : AppCompatActivity() {
             }
         })*/
 
-          background=findViewById<LinearLayout>(R.id.backMenu) as LinearLayout
+         // background=findViewById<LinearLayout>(R.id.backMenu) as LinearLayout
         db= RegistrationAdapter(this)
-        //clocklayout=findViewById<LinearLayout>(R.id.textClockLinearLayoutID) as LinearLayout
-          //tClock=findViewById<TextClock>(R.id.textClock) as TextClock
-       //binding= ActivityMainBinding.inflate(layoutInflater)
-       // itemRed=findViewById<LinearLayout>(R.id.redColor) as MenuItem
+
         supportActionBar?.title="Option Menu"
       /*  buttonSheetCall.setOnClickListener {
             if(bottomSheetBehavior.state==BottomSheetBehavior.STATE_COLLAPSED)
@@ -108,7 +108,7 @@ class MainActivity : AppCompatActivity() {
                 //val viewReg:View= View.inflate(Context.)
                 setContentView(R.layout.registerlayout)
                 Toast.makeText(this@MainActivity,"Register options",Toast.LENGTH_SHORT).show()
-                addRecordRegistrations()
+               addRecordRegistrations()
 
             }
 
@@ -121,7 +121,7 @@ class MainActivity : AppCompatActivity() {
             R.id.textsome->{
                 Toast.makeText(this@MainActivity,"This item will be shown always on the action bar"
             ,Toast.LENGTH_SHORT).show()
-                setContentView(R.layout.listview3)
+               setContentView(R.layout.listview3)
                 //refreshDATA()
 
             }
@@ -191,14 +191,14 @@ class MainActivity : AppCompatActivity() {
 
 
 
-    fun refreshDATA(){
-        val db=RegistrationAdapter(this)
-        peopleList=db.readtDATA()
-        val adapter=PeopleAdapter(this,peopleList)
+    fun refreshDATA(){//not used
+       // val db=RegistrationAdapter(this)
+       // peopleList=db.readtDATA()
+       // val adapter=PeopleAdapter(this,peopleList)
         //viewlist=findViewById(R.id.listlayout)
         //viewlist.findViewById<ListView>(R.id.data_list).adapter=adapter
-        val newList:ListView = findViewById(R.id.data_list1)
-        newList.adapter=adapter
+       // val newList:ListView = findViewById(R.id.data_list1)
+        //newList.adapter=adapter
     }
     private fun addRecordRegistrations(){
         //val name:EditText=findViewById(R.id.editname)
@@ -206,6 +206,7 @@ class MainActivity : AppCompatActivity() {
         name=findViewById(R.id.editname)
         email=findViewById(R.id.editemail)
         password=findViewById(R.id.editpasword)
+        idedit=findViewById(R.id.editID)
 
         buttonregister.setOnClickListener {
             if(name.text.toString().isEmpty()||email.text.toString().isEmpty()||password.text.toString().isEmpty()){
@@ -213,23 +214,38 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this@MainActivity,"Fill all the fields",Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }else {
-
+                val idlocal=idedit.text.toString().toInt()
                 val namelocal = name.text.toString()
                 val emaillocal = email.text.toString()
                 val passlocal = password.text.toString()
-                val data = Registration( 22,namelocal, emaillocal,passlocal)
+                Log.println(Log.VERBOSE,"Name","$namelocal  $emaillocal    $passlocal")
+                val data = Registration( idlocal,namelocal, emaillocal,passlocal)
 
                 //val bottomView:View=findViewById(R.id.layout_bottomsheet)
                 db.insertDATA(data)
+
+                Log.println(Log.VERBOSE,"toString Reg"," $namelocal  $emaillocal    $passlocal ")
                 Toast.makeText(this@MainActivity, "data saved successfully", Toast.LENGTH_SHORT).show()
                 name.text.clear()
                 email.text.clear()
                 password.text.clear()
-                setContentView(R.layout.listview4)
+
+                /*val adapter = ArrayAdapter(this,
+                    R.layout.listregpeopleview, db.readtDATA())
+                val listView:ListView
+               try {
+                    listView = findViewById(R.id.data_list1)
+                   listView.setAdapter(adapter)
+               } catch (e:AndroidRuntimeException){
+
+               }*/
+
                // peopleList=db.readtDATA()
                // val adapter=PeopleAdapter(this,peopleList)
                // val newList:ListView = findViewById(R.id.rvItemsList2)
                 //newList.adapter=adapter
+                setContentView(R.layout.listregpeopleview)
+
 
             //setupListofDataIntoRecyclerView()
 
@@ -241,7 +257,7 @@ class MainActivity : AppCompatActivity() {
         val regList:ArrayList<Registration> =dbHandler.readtDATA()
         return regList
     }
-    private fun setupListofDataIntoRecyclerView(){
+    private fun setupListofDataIntoRecyclerView(){ //not used method
         val rvItemsList:RecyclerView=findViewById(R.id.rvItemsList2)
         //val tvNoRecordsAvailable:TextView=findViewById(R.id.tvNoRecordsAvailable)
        // val textID:TextView=findViewById(R.id.viewID2)
@@ -265,7 +281,7 @@ class MainActivity : AppCompatActivity() {
            // tvNoRecordsAvailable.visibility = View.VISIBLE
         }
     }
-
+ // class not used atm...
     class PeopleAdapter(internal var activity: Activity,internal var peoplelist:List<Registration>):BaseAdapter(){
         internal var inflater:LayoutInflater
         init {
@@ -280,16 +296,16 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun getItemId(p0: Int): Long {
-            return peoplelist[p0].email.toLong()
+            return peoplelist[p0].id.toLong()
         }
 
         override fun getView(p0: Int, p1: View?, p2: ViewGroup?): View {
             val view3:View=inflater.inflate(R.layout.registerlayout,null)
-            var id3:Int=-7
+            //var id3:Int=-7
            var name1=view3.findViewById<EditText>(R.id.editname)
             var email1=view3.findViewById<EditText>(R.id.editemail)
             var pass1=view3.findViewById<EditText>(R.id.editpasword)
-            peoplelist[p0].id=id3
+            //peoplelist[p0].id=id3
             peoplelist[p0].name= name1.toString()
             peoplelist[p0].email=email1.toString()
             peoplelist[p0].password=pass1.toString()

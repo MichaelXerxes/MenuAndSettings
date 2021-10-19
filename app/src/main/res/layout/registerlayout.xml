@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/layout_image"
-    android:background="#9DD3CD"
+    android:background="#5D6766"
     tools:context=".RegisterActivity">
 
 
@@ -14,7 +14,7 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginTop="16dp"
-        android:background="#6CBEDF"
+        android:background="#C65E57"
         android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -95,6 +95,22 @@
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/register_button" />
+
+ <EditText
+     android:id="@+id/editID"
+     android:layout_width="0dp"
+     android:layout_height="50dp"
+     android:layout_marginTop="28dp"
+     android:background="@drawable/bacground"
+     android:ems="10"
+     android:hint="ID just for testing"
+     android:inputType="textPassword"
+     android:paddingLeft="10dp"
+     android:paddingRight="10dp"
+     app:layout_constraintEnd_toEndOf="parent"
+     app:layout_constraintHorizontal_bias="1.0"
+     app:layout_constraintStart_toStartOf="parent"
+     app:layout_constraintTop_toBottomOf="@+id/alreadyhave" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
