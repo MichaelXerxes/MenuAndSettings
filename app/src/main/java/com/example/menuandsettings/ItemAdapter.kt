@@ -15,7 +15,7 @@ class ItemAdapter(val context: Context,val items: ArrayList<Registration>):
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):ViewHolder {
         return ViewHolder(
             LayoutInflater.from(context).inflate(
-                R.layout.listview4,
+                R.layout.listview2,
                 parent,false
             )
         )

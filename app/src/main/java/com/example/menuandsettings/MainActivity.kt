@@ -128,6 +128,7 @@ class MainActivity : AppCompatActivity() {
             R.id.menu_sheetbottom->{
                 Toast.makeText(this@MainActivity,"hahahahah",Toast.LENGTH_SHORT).show()
                 setContentView(R.layout.bottom_sheet)
+
               // refreshDATA()
 
               // val bottomSheet:View=findViewById(R.id.bottom_sheet)
@@ -223,12 +224,15 @@ class MainActivity : AppCompatActivity() {
 
                 //val bottomView:View=findViewById(R.id.layout_bottomsheet)
                 db.insertDATA(data)
+                val list=db.readtDATA()
 
                 Log.println(Log.VERBOSE,"toString Reg"," $namelocal  $emaillocal    $passlocal ")
                 Toast.makeText(this@MainActivity, "data saved successfully", Toast.LENGTH_SHORT).show()
+                idedit.text.clear()
                 name.text.clear()
                 email.text.clear()
                 password.text.clear()
+                //val itemAd= ItemAdapter(context = this,list)
 
                 /*val adapter = ArrayAdapter(this,
                     R.layout.listregpeopleview, db.readtDATA())
@@ -244,7 +248,7 @@ class MainActivity : AppCompatActivity() {
                // val adapter=PeopleAdapter(this,peopleList)
                // val newList:ListView = findViewById(R.id.rvItemsList2)
                 //newList.adapter=adapter
-                setContentView(R.layout.listregpeopleview)
+                setContentView(R.layout.listview2)
 
 
             //setupListofDataIntoRecyclerView()
