@@ -33,8 +33,9 @@ class RegistrationAdapter(var context:Context):SQLiteOpenHelper(context,DATABASE
         cv.put(EMAIL_COLUMN,people.email)
         cv.put(PASS_COLUMN,people.password)
 
-        Log.println(Log.VERBOSE,"Errrrr","ID- $ID_COLUMN Name- $NAME_COLUMN EM- $EMAIL_COLUMN PASS- $PASS_COLUMN  ")
+        //Log.println(Log.VERBOSE,"Errrrr","ID- $ID_COLUMN Name- $NAME_COLUMN EM- $EMAIL_COLUMN PASS- $PASS_COLUMN  ")
         val successdDB=db.insert(TABLE_NAME, null,cv)
+        db.close()
         return successdDB
     }
     @SuppressLint("Range")

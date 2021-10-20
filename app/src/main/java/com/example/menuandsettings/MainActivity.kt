@@ -14,7 +14,7 @@ import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-import com.example.menuandsettings.databinding.ActivityMainBinding
+//import com.example.menuandsettings.databinding.ActivityMainBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 
 
@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var password:EditText
     lateinit var buttonregister:Button
     lateinit var db:RegistrationAdapter
+    lateinit var listView: ListView
     // val website:WebView=findViewById(R.id.webID)
 
     //lateinit var viewReg:View
@@ -39,6 +40,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
        // val website:WebView=findViewById(R.id.webID)
        // website.loadUrl("https://www.google.co.uk")
+
 
         setContentView(R.layout.activity_main)
        // setupListofDataIntoRecyclerView()
@@ -121,7 +123,9 @@ class MainActivity : AppCompatActivity() {
             R.id.textsome->{
                 Toast.makeText(this@MainActivity,"This item will be shown always on the action bar"
             ,Toast.LENGTH_SHORT).show()
-               setContentView(R.layout.listview3)
+               // addRecordRegistrations()
+                viewRecord(listView)
+               //setContentView(R.layout.listview3)
                 //refreshDATA()
 
             }
@@ -129,42 +133,6 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this@MainActivity,"hahahahah",Toast.LENGTH_SHORT).show()
                 setContentView(R.layout.bottom_sheet)
 
-              // refreshDATA()
-
-              // val bottomSheet:View=findViewById(R.id.bottom_sheet)
-              //  val buttonSheetCall:Button=findViewById(R.id.button_forsheet)
-               // val bottomSheetBehavior:BottomSheetBehavior<*> =BottomSheetBehavior.from<View>(bottomSheet)
-                /* bottomSheetBehavior.setBottomSheetCallback(object :BottomSheetBehavior.BottomSheetCallback()
-                 {
-                     override fun onSlide(bottomSheet: View, slideOffset: Float) {
-                         Toast.makeText(applicationContext,"OnSlide Function Fiu FIu ",Toast.LENGTH_SHORT).show()
-                     }
-
-                     override fun onStateChanged(bottomSheet: View, newState: Int) {
-                         when(newState){
-                             BottomSheetBehavior.STATE_DRAGGING->Toast.makeText(applicationContext,"Bottom Shett Behavior State dragginf",Toast.LENGTH_SHORT).show()
-
-                         }
-                     }
-                 })*/
-
-                //background=findViewById<LinearLayout>(R.id.backMenu) as LinearLayout
-                //db= RegistrationAdapter(this)
-                //clocklayout=findViewById<LinearLayout>(R.id.textClockLinearLayoutID) as LinearLayout
-                //tClock=findViewById<TextClock>(R.id.textClock) as TextClock
-                //binding= ActivityMainBinding.inflate(layoutInflater)
-                // itemRed=findViewById<LinearLayout>(R.id.redColor) as MenuItem
-
-                /* buttonSheetCall.setOnClickListener {
-                      if(bottomSheetBehavior.state==BottomSheetBehavior.STATE_COLLAPSED)
-                      {
-                          bottomSheetBehavior.state=BottomSheetBehavior.STATE_EXPANDED
-                      }
-                      else
-                      {
-                          bottomSheetBehavior.state=BottomSheetBehavior.STATE_COLLAPSED
-                      }
-                  }*/
             }
         }
 
@@ -193,13 +161,38 @@ class MainActivity : AppCompatActivity() {
 
 
     fun refreshDATA(){//not used
-       // val db=RegistrationAdapter(this)
-       // peopleList=db.readtDATA()
-       // val adapter=PeopleAdapter(this,peopleList)
+       val db=RegistrationAdapter(this)
+       peopleList=db.readtDATA()
+       //val adapter=MyListAdapter(this,peopleList)
         //viewlist=findViewById(R.id.listlayout)
         //viewlist.findViewById<ListView>(R.id.data_list).adapter=adapter
        // val newList:ListView = findViewById(R.id.data_list1)
         //newList.adapter=adapter
+    }
+    fun viewRecord(view: View){
+        setContentView(R.layout.listregpeopleview)
+        val dbHandler:RegistrationAdapter= RegistrationAdapter(this)
+        val regList:List<Registration> =dbHandler.readtDATA()
+        val regListID=Array<String>(regList.size){"0"}
+        val regListName=Array<String>(regList.size){"null"}
+        val regListEmail=Array<String>(regList.size){"null"}
+        val regListPassword=Array<String>(regList.size){"null"}
+        var index=0
+
+        for (x in regList){
+            regListID[index]=x.id.toString()
+            regListName[index]=x.name
+            regListEmail[index]=x.email
+            regListPassword[index]=x.password
+            index++
+        }
+
+        val myListAdapter=MyListAdapter(this,regListID,regListName,regListEmail,regListPassword)
+        listView=findViewById(R.id.data_list1)
+        listView.adapter=myListAdapter
+
+
+
     }
     private fun addRecordRegistrations(){
         //val name:EditText=findViewById(R.id.editname)
@@ -222,9 +215,9 @@ class MainActivity : AppCompatActivity() {
                 Log.println(Log.VERBOSE,"Name","$namelocal  $emaillocal    $passlocal")
                 val data = Registration( idlocal,namelocal, emaillocal,passlocal)
 
-                //val bottomView:View=findViewById(R.id.layout_bottomsheet)
+
                 db.insertDATA(data)
-                val list=db.readtDATA()
+                //val list=db.readtDATA()
 
                 Log.println(Log.VERBOSE,"toString Reg"," $namelocal  $emaillocal    $passlocal ")
                 Toast.makeText(this@MainActivity, "data saved successfully", Toast.LENGTH_SHORT).show()
@@ -232,26 +225,8 @@ class MainActivity : AppCompatActivity() {
                 name.text.clear()
                 email.text.clear()
                 password.text.clear()
-                //val itemAd= ItemAdapter(context = this,list)
 
-                /*val adapter = ArrayAdapter(this,
-                    R.layout.listregpeopleview, db.readtDATA())
-                val listView:ListView
-               try {
-                    listView = findViewById(R.id.data_list1)
-                   listView.setAdapter(adapter)
-               } catch (e:AndroidRuntimeException){
-
-               }*/
-
-               // peopleList=db.readtDATA()
-               // val adapter=PeopleAdapter(this,peopleList)
-               // val newList:ListView = findViewById(R.id.rvItemsList2)
-                //newList.adapter=adapter
                 setContentView(R.layout.listview2)
-
-
-            //setupListofDataIntoRecyclerView()
 
             }
         }
