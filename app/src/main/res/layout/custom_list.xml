@@ -5,24 +5,28 @@
     android:orientation="vertical">
     <TextView
         android:id="@+id/viewIDNew"
+        android:textSize="15sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="ID: "
         android:textAppearance="@style/Base.CardView"/>
     <TextView
         android:id="@+id/viewNameNew"
+        android:textSize="15sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Name: "
         android:textAppearance="@style/Base.CardView"/>
     <TextView
         android:id="@+id/viewEMailNew"
+        android:textSize="15sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Email: "
         android:textAppearance="@style/Base.CardView"/>
     <TextView
         android:id="@+id/viewPassNew"
+        android:textSize="15sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Password: "

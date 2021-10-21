@@ -13,12 +13,12 @@ import java.lang.StringBuilder
 class RegistrationAdapter(var context:Context):SQLiteOpenHelper(context,DATABASE_NAME,null,6) {
     override fun onCreate(db: SQLiteDatabase?) {
          val personTable=("CREATE TABLE "+ TABLE_NAME +
-                 "("+ ID_COLUMN +" INTEGER PRIMARY KEY AUTOINCREMENT, "+
+                 "("+ ID_COLUMN +" INTEGER PRIMARY KEY, "+
                  NAME_COLUMN +" TEXT, "+
                  EMAIL_COLUMN +" TEXT, "+
                  PASS_COLUMN +" TEXT)")
         //($ID_COLUMN INTEGER PRIMARY KEY,$NAME_COLUMN TEXT,$EMAIL_COLUMN TEXT,$PASS_COLUMN TEXT )
-        db?.execSQL(personTable)
+        db!!.execSQL(personTable)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, p1: Int, p2: Int) {
@@ -33,7 +33,8 @@ class RegistrationAdapter(var context:Context):SQLiteOpenHelper(context,DATABASE
         cv.put(EMAIL_COLUMN,people.email)
         cv.put(PASS_COLUMN,people.password)
 
-        //Log.println(Log.VERBOSE,"Errrrr","ID- $ID_COLUMN Name- $NAME_COLUMN EM- $EMAIL_COLUMN PASS- $PASS_COLUMN  ")
+        Log.println(Log.VERBOSE,"Adapter","ID- $ID_COLUMN Name- $NAME_COLUMN EM- $EMAIL_COLUMN PASS- $PASS_COLUMN  ")
+        Log.println(Log.VERBOSE,"Adapter fromReg con","ID ${people.id} Name ${people.name} Email ${people.email} Pass ${people.password}")
         val successdDB=db.insert(TABLE_NAME, null,cv)
         db.close()
         return successdDB
@@ -58,10 +59,10 @@ class RegistrationAdapter(var context:Context):SQLiteOpenHelper(context,DATABASE
         if(cursor.moveToFirst()){
             do {
 
-                readID=cursor.getInt(cursor.getColumnIndex(ID_COLUMN))
-                readName=cursor.getString(cursor.getColumnIndex(NAME_COLUMN))
-                readEmail=cursor.getString(cursor.getColumnIndex(EMAIL_COLUMN))
-                readPass=cursor.getString(cursor.getColumnIndex(PASS_COLUMN))
+                readID=cursor.getInt(cursor.getColumnIndex("ID_COLUMN"))
+                readName=cursor.getString(cursor.getColumnIndex("NAME_COLUMN"))
+                readEmail=cursor.getString(cursor.getColumnIndex("EMAIL_COLUMN"))
+                readPass=cursor.getString(cursor.getColumnIndex("PASS_COLUMN"))
                 val person= Registration(readID,readName,readEmail,readPass)
                 list.add(person)
 
@@ -74,7 +75,7 @@ class RegistrationAdapter(var context:Context):SQLiteOpenHelper(context,DATABASE
         return list
     }
     companion object{
-        val DATABASE_NAME="6"
+        val DATABASE_NAME="7"
         val TABLE_NAME="People2"
         val ID_COLUMN="ID_COLUMN"
         val NAME_COLUMN="NAME_COLUMN"

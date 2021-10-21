@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 //import com.example.menuandsettings.databinding.ActivityMainBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import java.io.Console
 
 
 class MainActivity : AppCompatActivity() {
@@ -33,8 +34,10 @@ class MainActivity : AppCompatActivity() {
     lateinit var password:EditText
     lateinit var buttonregister:Button
     lateinit var db:RegistrationAdapter
-    lateinit var listView: ListView
+
     lateinit var reglayout:View
+    lateinit var Savebutton:Button
+    lateinit var Viewbutton:Button
     // val website:WebView=findViewById(R.id.webID)
 
     //lateinit var viewReg:View
@@ -45,6 +48,10 @@ class MainActivity : AppCompatActivity() {
 
 
         setContentView(R.layout.activity_main)
+
+        Savebutton=findViewById(R.id.buttonSave)
+        Viewbutton=findViewById(R.id.buttonView)
+
        // setupListofDataIntoRecyclerView()
 
         //val bottomSheet:View=findViewById(R.id.bottom_sheet,null)
@@ -68,6 +75,15 @@ class MainActivity : AppCompatActivity() {
         db= RegistrationAdapter(this)
 
         supportActionBar?.title="Option Menu"
+        Savebutton.setOnClickListener {
+            saveRecord()
+            return@setOnClickListener
+        }
+        Viewbutton.setOnClickListener {
+            viewRecord()
+            Toast.makeText(applicationContext, "View View", Toast.LENGTH_SHORT).show()
+            return@setOnClickListener
+        }
       /*  buttonSheetCall.setOnClickListener {
             if(bottomSheetBehavior.state==BottomSheetBehavior.STATE_COLLAPSED)
             {
@@ -159,26 +175,48 @@ class MainActivity : AppCompatActivity() {
     }
     fun  saveRecord(){
 
-        name=findViewById(R.id.editname)
-        email=findViewById(R.id.editemail)
-        password=findViewById(R.id.editpasword)
-        idedit=findViewById(R.id.editID)
+       // name=findViewById(R.id.editname)
+       // email=findViewById(R.id.editemail)
+       // password=findViewById(R.id.editpasword)
+       // idedit=findViewById(R.id.editID)
 
-        val id=idedit.text.toString()
-        val name1=name.text.toString()
-        val email1=email.text.toString()
-        val pass=password.text.toString()
+        val idNew= findViewById<EditText>(R.id.edituser_ID)
+        val nameNew= findViewById<EditText>(R.id.edituser_Name)
+        val emailNew=findViewById<EditText>(R.id.edituser_Email)
+        val passNew=findViewById<EditText>(R.id.edituser_Pass)
+
+     //   val id=idedit.text.toString()
+      //  val name1=name.text.toString()
+      //  val email1=email.text.toString()
+     //   val pass=password.text.toString()
+        val id12=idNew.text.toString()
+        val name12=nameNew.text.toString()
+        val email12=emailNew.text.toString()
+        val pass12=passNew.text.toString()
         val dbHandler:RegistrationAdapter=RegistrationAdapter(this)
+        Log.println(Log.VERBOSE,"Errrrr","ID- $id12 Name- $name12 EM- $email12 PASS- $pass12  ")
+        if(id12.trim()!=""&& name12.trim()!=""&& email12.trim()!="" && pass12.trim()!=""){
+            val status=dbHandler.insertDATA(Registration(Integer.parseInt(id12),name12,email12,pass12))
+            if(status>-1){
+                Toast.makeText(applicationContext,"record save",Toast.LENGTH_LONG).show()
+                idNew.text.clear()
+                nameNew.text.clear()
+                passNew.text.clear()
+            }
+        }else{
+            Toast.makeText(applicationContext,"id or name or email cannot be blank",Toast.LENGTH_LONG).show()
+        }
 
-        dbHandler.insertDATA(Registration(Integer.parseInt(id),name1,email1,pass))
-        idedit.text.clear()
-        name.text.clear()
-        email.text.clear()
-        password.text.clear()
+
+      //  dbHandler.insertDATA(Registration(Integer.parseInt(id),name1,email1,pass))
+       // idedit.text.clear()
+       // name.text.clear()
+       // email.text.clear()
+       // password.text.clear()
     }
 
-    fun viewRecord(view: View){
-       // setContentView(R.layout.listregpeopleview)
+    fun viewRecord(){
+
         val dbHandler:RegistrationAdapter= RegistrationAdapter(this)
         val regList:List<Registration> =dbHandler.readtDATA()
         val regListID=Array<String>(regList.size){"0"}
@@ -186,6 +224,7 @@ class MainActivity : AppCompatActivity() {
         val regListEmail=Array<String>(regList.size){"null"}
         val regListPassword=Array<String>(regList.size){"null"}
         var index=0
+        val listView=findViewById<ListView>(R.id.listViewData)
 
         for (x in regList){
             regListID[index]=x.id.toString()
@@ -196,7 +235,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         val myListAdapter=MyListAdapter(this,regListID,regListName,regListEmail,regListPassword)
-        listView=findViewById(R.id.listViewData)
+
         listView.adapter=myListAdapter
 
 
@@ -277,6 +316,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
  // class not used atm...
+ /*
     class PeopleAdapter(internal var activity: Activity,internal var peoplelist:List<Registration>):BaseAdapter(){
         internal var inflater:LayoutInflater
         init {
@@ -311,5 +351,5 @@ class MainActivity : AppCompatActivity() {
        //     val db:SQLiteDatabase=this.get
       //  }
 
-    }
+    }*/
 }

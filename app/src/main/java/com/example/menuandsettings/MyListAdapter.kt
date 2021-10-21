@@ -8,7 +8,7 @@ import android.widget.TextView
 
 class MyListAdapter(private val context: Activity,private val id:Array<String>,
                     private val name: Array<String>, private val email: Array<String>,
-                    private val password: Array<String>):ArrayAdapter<String>(context,R.layout.custom_list) {
+                    private val password: Array<String>):ArrayAdapter<String>(context,R.layout.custom_list,name) {
     override fun getView(position: Int, view: View?, parent: ViewGroup):View {
         val inflater=context.layoutInflater
         val rowView=inflater.inflate(R.layout.custom_list,null,true)

@@ -19,6 +19,18 @@
     <include layout="@layout/textclock"/>
         <include layout="@layout/loginlayout"/>
         <include layout="@layout/registerlayout"/>
+        <TextView
+            android:id="@+id/MainTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="2 “Climb mountains not so the world can see you,
+         but so you can see the world.”
+          3 “You learn more from failure than from success;
+          don’t let it stop you. Failure builds character.”
+          4 “The most dangerous risk of all – The risk of spending your life not doing what you want
+          on the bet you can buy yourself the freedom to do it later.”"
+            android:textSize="25sp" />
     </LinearLayout>
 
 
