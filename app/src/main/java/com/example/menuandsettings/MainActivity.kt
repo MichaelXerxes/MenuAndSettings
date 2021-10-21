@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Layout
 import android.util.AndroidRuntimeException
 import android.util.Log
 import android.view.*
@@ -33,6 +34,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var buttonregister:Button
     lateinit var db:RegistrationAdapter
     lateinit var listView: ListView
+    lateinit var reglayout:View
     // val website:WebView=findViewById(R.id.webID)
 
     //lateinit var viewReg:View
@@ -111,7 +113,7 @@ class MainActivity : AppCompatActivity() {
                 setContentView(R.layout.registerlayout)
                 Toast.makeText(this@MainActivity,"Register options",Toast.LENGTH_SHORT).show()
                addRecordRegistrations()
-
+                //saveRecord()
             }
 
 
@@ -124,8 +126,8 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this@MainActivity,"This item will be shown always on the action bar"
             ,Toast.LENGTH_SHORT).show()
                // addRecordRegistrations()
-                viewRecord(listView)
-               //setContentView(R.layout.listview3)
+                //viewRecord(listView)
+               setContentView(R.layout.activity_main)
                 //refreshDATA()
 
             }
@@ -155,22 +157,28 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.textclock)
         super.onActionModeStarted(mode)
     }
+    fun  saveRecord(){
 
-  //  fun setBindings(binding: ActivityMainBinding){// }
+        name=findViewById(R.id.editname)
+        email=findViewById(R.id.editemail)
+        password=findViewById(R.id.editpasword)
+        idedit=findViewById(R.id.editID)
 
+        val id=idedit.text.toString()
+        val name1=name.text.toString()
+        val email1=email.text.toString()
+        val pass=password.text.toString()
+        val dbHandler:RegistrationAdapter=RegistrationAdapter(this)
 
-
-    fun refreshDATA(){//not used
-       val db=RegistrationAdapter(this)
-       peopleList=db.readtDATA()
-       //val adapter=MyListAdapter(this,peopleList)
-        //viewlist=findViewById(R.id.listlayout)
-        //viewlist.findViewById<ListView>(R.id.data_list).adapter=adapter
-       // val newList:ListView = findViewById(R.id.data_list1)
-        //newList.adapter=adapter
+        dbHandler.insertDATA(Registration(Integer.parseInt(id),name1,email1,pass))
+        idedit.text.clear()
+        name.text.clear()
+        email.text.clear()
+        password.text.clear()
     }
+
     fun viewRecord(view: View){
-        setContentView(R.layout.listregpeopleview)
+       // setContentView(R.layout.listregpeopleview)
         val dbHandler:RegistrationAdapter= RegistrationAdapter(this)
         val regList:List<Registration> =dbHandler.readtDATA()
         val regListID=Array<String>(regList.size){"0"}
@@ -188,7 +196,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         val myListAdapter=MyListAdapter(this,regListID,regListName,regListEmail,regListPassword)
-        listView=findViewById(R.id.data_list1)
+        listView=findViewById(R.id.listViewData)
         listView.adapter=myListAdapter
 
 
@@ -196,11 +204,16 @@ class MainActivity : AppCompatActivity() {
     }
     private fun addRecordRegistrations(){
         //val name:EditText=findViewById(R.id.editname)
-        buttonregister=findViewById(R.id.register_button)
-        name=findViewById(R.id.editname)
-        email=findViewById(R.id.editemail)
-        password=findViewById(R.id.editpasword)
-        idedit=findViewById(R.id.editID)
+       buttonregister=findViewById(R.id.register_button)
+       reglayout=findViewById(R.id.layout_image)
+      //  name=findViewById(R.id.editname)
+    //    email=findViewById(R.id.editemail)
+      //  password=findViewById(R.id.editpasword)
+      //  idedit=findViewById(R.id.editID)
+      //  name=findViewById(R.id.editname)
+       // email=findViewById(R.id.editemail)
+       // password=findViewById(R.id.editpasword)
+      //  idedit=findViewById(R.id.editID)
 
         buttonregister.setOnClickListener {
             if(name.text.toString().isEmpty()||email.text.toString().isEmpty()||password.text.toString().isEmpty()){
@@ -208,6 +221,7 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this@MainActivity,"Fill all the fields",Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }else {
+                //saveRecord()
                 val idlocal=idedit.text.toString().toInt()
                 val namelocal = name.text.toString()
                 val emaillocal = email.text.toString()
@@ -229,6 +243,8 @@ class MainActivity : AppCompatActivity() {
                 setContentView(R.layout.listview2)
 
             }
+
+            //setContentView(R.layout.loginlayout)
         }
     }
     private fun getItemsList():ArrayList<Registration>{

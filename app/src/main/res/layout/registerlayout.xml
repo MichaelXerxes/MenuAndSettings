@@ -78,6 +78,7 @@
         android:background="@drawable/bacground"
         android:text="Register"
         android:textColor="#1A3A46"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"

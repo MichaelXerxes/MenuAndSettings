@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/viewIDNew"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ID: "
+        android:textAppearance="@style/Base.CardView"/>
+    <TextView
+        android:id="@+id/viewNameNew"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Name: "
+        android:textAppearance="@style/Base.CardView"/>
+    <TextView
+        android:id="@+id/viewEMailNew"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Email: "
+        android:textAppearance="@style/Base.CardView"/>
+    <TextView
+        android:id="@+id/viewPassNew"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Password: "
+        android:textAppearance="@style/Base.CardView"/>
+
+
+</LinearLayout>

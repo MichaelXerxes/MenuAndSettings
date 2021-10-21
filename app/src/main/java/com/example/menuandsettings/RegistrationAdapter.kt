@@ -42,8 +42,7 @@ class RegistrationAdapter(var context:Context):SQLiteOpenHelper(context,DATABASE
     fun readtDATA():ArrayList<Registration>{
         val list=ArrayList<Registration>()
         val db =this.readableDatabase
-        val query = ("SELECT * FROM $TABLE_NAME")
-        //val result=db.rawQuery(query,null)
+        val query = ("SELECT  * FROM $TABLE_NAME")
 
         var cursor:Cursor?=null
         var readID:Int
@@ -56,11 +55,10 @@ class RegistrationAdapter(var context:Context):SQLiteOpenHelper(context,DATABASE
             db.execSQL(query)
             return ArrayList()
         }
-        //db.execSQL(query)
         if(cursor.moveToFirst()){
             do {
 
-                readID=cursor.getString(cursor.getColumnIndex(ID_COLUMN)).toInt()
+                readID=cursor.getInt(cursor.getColumnIndex(ID_COLUMN))
                 readName=cursor.getString(cursor.getColumnIndex(NAME_COLUMN))
                 readEmail=cursor.getString(cursor.getColumnIndex(EMAIL_COLUMN))
                 readPass=cursor.getString(cursor.getColumnIndex(PASS_COLUMN))
@@ -76,7 +74,7 @@ class RegistrationAdapter(var context:Context):SQLiteOpenHelper(context,DATABASE
         return list
     }
     companion object{
-        val DATABASE_NAME="5"
+        val DATABASE_NAME="6"
         val TABLE_NAME="People2"
         val ID_COLUMN="ID_COLUMN"
         val NAME_COLUMN="NAME_COLUMN"
