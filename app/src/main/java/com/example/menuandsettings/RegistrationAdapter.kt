@@ -17,7 +17,7 @@ class RegistrationAdapter(var context:Context):SQLiteOpenHelper(context,DATABASE
                  NAME_COLUMN +" TEXT, "+
                  EMAIL_COLUMN +" TEXT, "+
                  PASS_COLUMN +" TEXT)")
-        //($ID_COLUMN INTEGER PRIMARY KEY,$NAME_COLUMN TEXT,$EMAIL_COLUMN TEXT,$PASS_COLUMN TEXT )
+
         db!!.execSQL(personTable)
     }
 

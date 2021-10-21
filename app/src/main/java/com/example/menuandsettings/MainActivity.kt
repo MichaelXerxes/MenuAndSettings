@@ -115,36 +115,33 @@ class MainActivity : AppCompatActivity() {
 
         when(item.itemId){
 
-            //R.id.redColor->background.setBackgroundColor(Color.parseColor("#FF0000"))
 
-                R.id.Clock->{
+
+            R.id.Clock->{
                     setContentView(R.layout.textclock)
                     Toast.makeText(this@MainActivity,"Time",Toast.LENGTH_SHORT).show()
-
-
-                    //setBackgroundColor(Color.parseColor("#FF0000"))
                 }
             R.id.Register->{
-                //val viewReg:View= View.inflate(Context.)
+
                 setContentView(R.layout.registerlayout)
                 Toast.makeText(this@MainActivity,"Register options",Toast.LENGTH_SHORT).show()
-               addRecordRegistrations()
-                //saveRecord()
+              // addRecordRegistrations()
+                buttonregister=findViewById(R.id.register_button)
+                buttonregister.setOnClickListener {
+                    saveRecord()
+                    setContentView(R.layout.listregpeopleview)
+                    viewRecord()
+                }
+
             }
-
-
 
             R.id.Login->{
                 setContentView(R.layout.loginlayout)
-
             }
             R.id.textsome->{
                 Toast.makeText(this@MainActivity,"This item will be shown always on the action bar"
             ,Toast.LENGTH_SHORT).show()
-               // addRecordRegistrations()
-                //viewRecord(listView)
                setContentView(R.layout.activity_main)
-                //refreshDATA()
 
             }
             R.id.menu_sheetbottom->{
@@ -153,17 +150,11 @@ class MainActivity : AppCompatActivity() {
 
             }
         }
-
         return super.onOptionsItemSelected(item)
-
     }
-
-
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
         if(item.title=="redColor")
-
-
             setContentView(R.layout.textclock)
         else Toast.makeText(this@MainActivity,"Red color Click",Toast.LENGTH_SHORT).show()
         return true//super.onContextItemSelected(item)
@@ -175,33 +166,33 @@ class MainActivity : AppCompatActivity() {
     }
     fun  saveRecord(){
 
-       // name=findViewById(R.id.editname)
-       // email=findViewById(R.id.editemail)
-       // password=findViewById(R.id.editpasword)
-       // idedit=findViewById(R.id.editID)
+        name=findViewById(R.id.editname)
+        email=findViewById(R.id.editemail)
+        password=findViewById(R.id.editpasword)
+        idedit=findViewById(R.id.editID)
 
-        val idNew= findViewById<EditText>(R.id.edituser_ID)
-        val nameNew= findViewById<EditText>(R.id.edituser_Name)
-        val emailNew=findViewById<EditText>(R.id.edituser_Email)
-        val passNew=findViewById<EditText>(R.id.edituser_Pass)
+       // val idNew= findViewById<EditText>(R.id.edituser_ID)
+      //  val nameNew= findViewById<EditText>(R.id.edituser_Name)
+        //val emailNew=findViewById<EditText>(R.id.edituser_Email)
+       // val passNew=findViewById<EditText>(R.id.edituser_Pass)
 
      //   val id=idedit.text.toString()
       //  val name1=name.text.toString()
       //  val email1=email.text.toString()
      //   val pass=password.text.toString()
-        val id12=idNew.text.toString()
-        val name12=nameNew.text.toString()
-        val email12=emailNew.text.toString()
-        val pass12=passNew.text.toString()
+        val id12=idedit.text.toString()
+        val name12=name.text.toString()
+        val email12=email.text.toString()
+        val pass12=password.text.toString()
         val dbHandler:RegistrationAdapter=RegistrationAdapter(this)
         Log.println(Log.VERBOSE,"Errrrr","ID- $id12 Name- $name12 EM- $email12 PASS- $pass12  ")
         if(id12.trim()!=""&& name12.trim()!=""&& email12.trim()!="" && pass12.trim()!=""){
             val status=dbHandler.insertDATA(Registration(Integer.parseInt(id12),name12,email12,pass12))
             if(status>-1){
                 Toast.makeText(applicationContext,"record save",Toast.LENGTH_LONG).show()
-                idNew.text.clear()
-                nameNew.text.clear()
-                passNew.text.clear()
+              //  idNew.text.clear()
+               // nameNew.text.clear()
+              //  passNew.text.clear()
             }
         }else{
             Toast.makeText(applicationContext,"id or name or email cannot be blank",Toast.LENGTH_LONG).show()
@@ -224,7 +215,7 @@ class MainActivity : AppCompatActivity() {
         val regListEmail=Array<String>(regList.size){"null"}
         val regListPassword=Array<String>(regList.size){"null"}
         var index=0
-        val listView=findViewById<ListView>(R.id.listViewData)
+        val listView=findViewById<ListView>(R.id.data_list1)
 
         for (x in regList){
             regListID[index]=x.id.toString()
