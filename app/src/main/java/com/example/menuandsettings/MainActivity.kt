@@ -99,30 +99,21 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu,menu)
-        return true//super.onCreateOptionsMenu(menu)
-        //var linearLayout:LinearLayout=findViewById(R.id.textClock)
-       // val view1: View =layoutInflater.inflate(R.layout.textclock,null)
-
-
+        return true
     }
+
     fun onGroupItemClick(item: MenuItem) {
-        // One of the group items (using the onClick attribute) was clicked
-        // The item parameter passed here indicates which item it is
-        // All other menu item clicks are handled by <code><a href="/reference/android/app/Activity.html#onOptionsItemSelected(android.view.MenuItem)">onOptionsItemSelected()</a></code>
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
         when(item.itemId){
-
-
 
             R.id.Clock->{
                     setContentView(R.layout.textclock)
                     Toast.makeText(this@MainActivity,"Time",Toast.LENGTH_SHORT).show()
                 }
-            R.id.Register->{
 
+            R.id.Register->{
                 setContentView(R.layout.registerlayout)
                 Toast.makeText(this@MainActivity,"Register options",Toast.LENGTH_SHORT).show()
               // addRecordRegistrations()
@@ -132,22 +123,21 @@ class MainActivity : AppCompatActivity() {
                     setContentView(R.layout.listregpeopleview)
                     viewRecord()
                 }
-
             }
 
             R.id.Login->{
                 setContentView(R.layout.loginlayout)
             }
+
             R.id.textsome->{
                 Toast.makeText(this@MainActivity,"This item will be shown always on the action bar"
             ,Toast.LENGTH_SHORT).show()
                setContentView(R.layout.activity_main)
-
             }
+
             R.id.menu_sheetbottom->{
                 Toast.makeText(this@MainActivity,"hahahahah",Toast.LENGTH_SHORT).show()
                 setContentView(R.layout.bottom_sheet)
-
             }
         }
         return super.onOptionsItemSelected(item)
@@ -233,13 +223,9 @@ class MainActivity : AppCompatActivity() {
 
     }
     private fun addRecordRegistrations(){
-        //val name:EditText=findViewById(R.id.editname)
+
        buttonregister=findViewById(R.id.register_button)
        reglayout=findViewById(R.id.layout_image)
-      //  name=findViewById(R.id.editname)
-    //    email=findViewById(R.id.editemail)
-      //  password=findViewById(R.id.editpasword)
-      //  idedit=findViewById(R.id.editID)
       //  name=findViewById(R.id.editname)
        // email=findViewById(R.id.editemail)
        // password=findViewById(R.id.editpasword)
@@ -251,7 +237,7 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this@MainActivity,"Fill all the fields",Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }else {
-                //saveRecord()
+
                 val idlocal=idedit.text.toString().toInt()
                 val namelocal = name.text.toString()
                 val emaillocal = email.text.toString()
@@ -261,7 +247,7 @@ class MainActivity : AppCompatActivity() {
 
 
                 db.insertDATA(data)
-                //val list=db.readtDATA()
+
 
                 Log.println(Log.VERBOSE,"toString Reg"," $namelocal  $emaillocal    $passlocal ")
                 Toast.makeText(this@MainActivity, "data saved successfully", Toast.LENGTH_SHORT).show()
@@ -274,73 +260,8 @@ class MainActivity : AppCompatActivity() {
 
             }
 
-            //setContentView(R.layout.loginlayout)
         }
     }
-    private fun getItemsList():ArrayList<Registration>{
-        val dbHandler:RegistrationAdapter= RegistrationAdapter(this)
-        val regList:ArrayList<Registration> =dbHandler.readtDATA()
-        return regList
-    }
-    private fun setupListofDataIntoRecyclerView(){ //not used method
-        val rvItemsList:RecyclerView=findViewById(R.id.rvItemsList2)
-        //val tvNoRecordsAvailable:TextView=findViewById(R.id.tvNoRecordsAvailable)
-       // val textID:TextView=findViewById(R.id.viewID2)
-       // val textName:TextView=findViewById(R.id.viewName2)
-       // val textEmail:TextView=findViewById(R.id.viewEmail2)
-       // val textPass:TextView=findViewById(R.id.viewPass2)
-        if (getItemsList().size > 0) {
-
-            rvItemsList.visibility = View.VISIBLE
-            //tvNoRecordsAvailable.visibility = View.GONE
 
 
-            rvItemsList.layoutManager = LinearLayoutManager(this)
-
-            val itemAdapter = ItemAdapter(this, getItemsList())
-
-            rvItemsList.adapter = itemAdapter
-        } else {
-
-            rvItemsList.visibility = View.GONE
-           // tvNoRecordsAvailable.visibility = View.VISIBLE
-        }
-    }
- // class not used atm...
- /*
-    class PeopleAdapter(internal var activity: Activity,internal var peoplelist:List<Registration>):BaseAdapter(){
-        internal var inflater:LayoutInflater
-        init {
-            inflater=activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        }
-        override fun getCount(): Int {
-            return peoplelist.size
-        }
-
-        override fun getItem(p0: Int): Any {
-            return peoplelist[p0]
-        }
-
-        override fun getItemId(p0: Int): Long {
-            return peoplelist[p0].id.toLong()
-        }
-
-        override fun getView(p0: Int, p1: View?, p2: ViewGroup?): View {
-            val view3:View=inflater.inflate(R.layout.registerlayout,null)
-            //var id3:Int=-7
-           var name1=view3.findViewById<EditText>(R.id.editname)
-            var email1=view3.findViewById<EditText>(R.id.editemail)
-            var pass1=view3.findViewById<EditText>(R.id.editpasword)
-            //peoplelist[p0].id=id3
-            peoplelist[p0].name= name1.toString()
-            peoplelist[p0].email=email1.toString()
-            peoplelist[p0].password=pass1.toString()
-
-        return view3
-        }
-        //fun readData():Cursor{
-       //     val db:SQLiteDatabase=this.get
-      //  }
-
-    }*/
 }
