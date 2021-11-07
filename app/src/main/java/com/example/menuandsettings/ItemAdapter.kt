@@ -8,7 +8,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-
+//class not used !!!!!!!!!!!!!!!!!!!!!!!
 class ItemAdapter(val context: Context,val items: ArrayList<Registration>):
    RecyclerView.Adapter<ItemAdapter.ViewHolder>(){
 

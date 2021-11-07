@@ -132,7 +132,7 @@ class MainActivity : AppCompatActivity() {
             R.id.textsome->{
                 Toast.makeText(this@MainActivity,"This item will be shown always on the action bar"
             ,Toast.LENGTH_SHORT).show()
-               setContentView(R.layout.activity_main)
+               setContentView(R.layout.listview3)
             }
 
             R.id.menu_sheetbottom->{
